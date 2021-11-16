@@ -1,12 +1,9 @@
 import express from "express";
+import { IProducts } from "../models/product";
 
-interface IProducts {
-  title: string;
-}
+import { Product } from "../models/product";
 
-export const products: IProducts[] = [];
-
-export const getAddProduct = (req: any, res: any, next: any) => {
+export const getAddProduct = (req: express.Request, res: express.Response) => {
   res.render("add-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
@@ -16,7 +13,21 @@ export const getAddProduct = (req: any, res: any, next: any) => {
   });
 };
 
-export const postAddProduct = (req: any, res: any, next: any) => {
-  products.push({ title: req.body.title });
+export const postAddProduct = (req: express.Request, res: express.Response) => {
+  const product = new Product(req.body.title);
+  product.save();
   res.redirect("/");
+};
+
+export const getProducts = (req: express.Request, res: express.Response) => {
+  Product.fetchAll((products: IProducts[]) => {
+    res.render("shop", {
+      prods: products,
+      pageTitle: "Shop",
+      path: "/",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true,
+    });
+  });
 };
