@@ -6,9 +6,8 @@ import {
   getCheckout,
   getProducts,
 } from "../controllers/shop";
-import router from "./admin";
 
-const routes = express.Router();
+const router = express.Router();
 
 router.get("/", getIndex);
 
@@ -20,4 +19,4 @@ router.get("/orders", getOrders);
 
 router.get("/checkout", getCheckout);
 
-export default routes;
+export default router;
