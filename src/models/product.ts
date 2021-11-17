@@ -8,32 +8,43 @@ export interface IProducts {
 
 const p = path.join(rootDir, "data", "products.json");
 
-const readProducts = (callback: any) => {
+const getProductsFromFile = (cb: any) => {
   fs.readFile(p, (err, fileContent) => {
     if (err) {
-      return callback([]);
+      cb([]);
     } else {
-      return callback(JSON.parse(fileContent.toString()));
+      cb(JSON.parse(fileContent.toString()));
     }
   });
 };
 
 export class Product {
   title;
-  constructor(t: string) {
-    this.title = t;
+  imageUrl;
+  description;
+  price;
+  constructor(
+    title: string,
+    imageUrl: string,
+    description: string,
+    price: string
+  ) {
+    this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
   }
 
   save() {
-    readProducts((products: IProducts[]) => {
+    getProductsFromFile((products: IProducts[]) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log("error on stringify", err);
+        console.log(err);
       });
     });
   }
 
-  static fetchAll(callback: any) {
-    readProducts(callback);
+  static fetchAll(cb: any) {
+    getProductsFromFile(cb);
   }
 }

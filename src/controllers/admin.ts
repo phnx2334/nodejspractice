@@ -1,10 +1,8 @@
+import { IProducts, Product } from "../models/product";
 import express from "express";
-import { IProducts } from "../models/product";
-
-import { Product } from "../models/product";
 
 export const getAddProduct = (req: express.Request, res: express.Response) => {
-  res.render("add-product", {
+  res.render("admin/add-product", {
     pageTitle: "Add Product",
     path: "/admin/add-product",
     formsCSS: true,
@@ -14,20 +12,21 @@ export const getAddProduct = (req: express.Request, res: express.Response) => {
 };
 
 export const postAddProduct = (req: express.Request, res: express.Response) => {
-  const product = new Product(req.body.title);
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const price = req.body.price;
+  const description = req.body.description;
+  const product = new Product(title, imageUrl, description, price);
   product.save();
   res.redirect("/");
 };
 
 export const getProducts = (req: express.Request, res: express.Response) => {
-  Product.fetchAll((products: IProducts[]) => {
-    res.render("shop", {
+  Product.fetchAll((products:IProducts[]) => {
+    res.render("admin/products", {
       prods: products,
-      pageTitle: "Shop",
-      path: "/",
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true,
+      pageTitle: "Admin Products",
+      path: "/admin/products",
     });
   });
 };
