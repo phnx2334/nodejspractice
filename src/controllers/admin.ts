@@ -1,4 +1,4 @@
-import { IProducts, Product } from "../models/product";
+import { IProduct, Product } from "../models/product";
 import express from "express";
 
 export const getAddProduct = (req: express.Request, res: express.Response) => {
@@ -22,7 +22,7 @@ export const postAddProduct = (req: express.Request, res: express.Response) => {
 };
 
 export const getProducts = (req: express.Request, res: express.Response) => {
-  Product.fetchAll((products:IProducts[]) => {
+  Product.fetchAll((products:IProduct[]) => {
     res.render("admin/products", {
       prods: products,
       pageTitle: "Admin Products",

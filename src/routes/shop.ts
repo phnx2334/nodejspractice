@@ -5,6 +5,7 @@ import {
   getOrders,
   getCheckout,
   getProducts,
+  getProduct,
 } from "../controllers/shop";
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.get("/", getIndex);
 
 router.get("/products", getProducts);
+
+router.get("/products/:id", getProduct);
 
 router.get("/cart", getCart);
 

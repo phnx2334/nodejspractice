@@ -1,9 +1,9 @@
 import express from "express";
 
-import { IProducts, Product } from "../models/product";
+import { IProduct, Product } from "../models/product";
 
 export const getProducts = (req: express.Request, res: express.Response) => {
-  Product.fetchAll((products: IProducts[]) => {
+  Product.fetchAll((products: IProduct[]) => {
     res.render("shop/product-list", {
       prods: products,
       pageTitle: "All Products",
@@ -12,8 +12,14 @@ export const getProducts = (req: express.Request, res: express.Response) => {
   });
 };
 
+export const getProduct = (req: express.Request, res: express.Response) => {
+  const product = req.params.id;
+
+  console.log("the product id is", product);
+};
+
 export const getIndex = (req: express.Request, res: express.Response) => {
-  Product.fetchAll((products: IProducts[]) => {
+  Product.fetchAll((products: IProduct[]) => {
     res.render("shop/index", {
       prods: products,
       pageTitle: "Shop",
